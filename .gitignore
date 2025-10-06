@@ -9,8 +9,17 @@ target/
 
 # Database files
 *.db
-*.sql
 Compta.session.sql
+
+# Database backups - Configuration intelligente
+backups/full_backup_*.sql         # Backups complets (trop gros pour Git)
+backups/transaction_data_*.sql    # Données transactionnelles (potentiellement gros)
+!backups/schema_structure_*.sql   # Structure DDL (toujours petit - OK pour Git)
+!backups/reference_data_*.sql     # Données de référence (petit - OK pour Git)
+!backups/github_ready_*.sql       # Backup optimisé GitHub (DDL + référence)
+
+# Autres fichiers SQL temporaires
+*.sql
 
 # Large deployment files
 deployment/*.zip
