@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.comptabilite.view.MainController">
+   <top>
+      <VBox>
+         <children>
+            <MenuBar>
+               <menus>
+                  <Menu text="Fichier">
+                     <items>
+                        <MenuItem onAction="#handleNewCompany" text="Nouvelle entreprise" />
+                        <SeparatorMenuItem />
+                        <MenuItem onAction="#handleLogout" text="Déconnexion" />
+                        <MenuItem onAction="#handleExit" text="Quitter" />
+                     </items>
+                  </Menu>
+                  <Menu text="Comptabilité">
+                     <items>
+                        <MenuItem onAction="#showPlanComptable" text="Plan comptable" />
+                        <MenuItem onAction="#showEcrituresComptables" text="Écritures comptables" />
+                     </items>
+                  </Menu>
+                  <Menu text="Facturation">
+                     <items>
+                        <MenuItem onAction="#showClients" text="Clients" />
+                        <MenuItem onAction="#showFournisseurs" text="Fournisseurs" />
+                        <MenuItem onAction="#showFactures" text="Factures" />
+                     </items>
+                  </Menu>
+                  <Menu text="Rapports">
+                     <items>
+                        <MenuItem onAction="#showRapports" text="Tous les rapports" />
+                        <SeparatorMenuItem />
+                        <MenuItem onAction="#showGrandLivre" text="Grand livre" />
+                        <MenuItem onAction="#showBalance" text="Balance" />
+                        <MenuItem onAction="#showBilan" text="Bilan" />
+                        <MenuItem onAction="#showCompteResultat" text="Compte de résultat" />
+                        <SeparatorMenuItem />
+                        <MenuItem onAction="#showDeclarationTVA" text="Déclaration TVA" />
+                     </items>
+                  </Menu>
+                  <Menu text="Administration">
+                     <items>
+                        <MenuItem onAction="#showUtilisateurs" text="Utilisateurs" />
+                        <MenuItem onAction="#showExercices" text="Exercices" />
+                        <MenuItem onAction="#showParametres" text="Paramètres" />
+                     </items>
+                  </Menu>
+                  <Menu text="Aide">
+                     <items>
+                        <MenuItem onAction="#showAbout" text="À propos" />
+                     </items>
+                  </Menu>
+               </menus>
+            </MenuBar>
+
+            <ToolBar>
+               <items>
+                  <Button onAction="#showEcrituresComptables" text="Écritures" />
+                  <Separator />
+                  <Button onAction="#showPlanComptable" text="Plan comptable" />
+                  <Button onAction="#showBalance" text="Balance" />
+                  <Separator />
+                  <Button onAction="#showClients" text="Clients" />
+                  <Button onAction="#showFactures" text="Factures" />
+                  <Separator />
+                  <Label fx:id="userLabel" text="Utilisateur: ">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="companyLabel" text="Entreprise: ">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </items>
+            </ToolBar>
+         </children>
+      </VBox>
+   </top>
+
+   <center>
+      <TabPane fx:id="mainTabPane" tabClosingPolicy="SELECTED_TAB">
+         <tabs>
+            <Tab fx:id="welcomeTab" closable="false" text="Accueil">
+               <content>
+                  <VBox alignment="CENTER" spacing="20.0">
+                     <children>
+                        <Label text="Bienvenue dans votre logiciel de comptabilité">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label text="Sélectionnez une option dans le menu pour commencer">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+
+                        <VBox alignment="CENTER" spacing="10.0">
+                           <children>
+                              <Label text="Actions rapides:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <HBox alignment="CENTER" spacing="20.0">
+                                 <children>
+                                    <Button onAction="#showEcrituresComptables" prefWidth="150.0" text="Nouvelle écriture" />
+                                    <Button onAction="#showFactures" prefWidth="150.0" text="Nouvelle facture" />
+                                    <Button onAction="#showBalance" prefWidth="150.0" text="Voir la balance" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+   </center>
+
+   <bottom>
+      <VBox>
+         <children>
+            <Separator />
+            <HBox spacing="20.0">
+               <children>
+                  <Label fx:id="statusLabel" text="Prêt" />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Label fx:id="dateLabel" text="Date: " />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </bottom>
+</BorderPane>

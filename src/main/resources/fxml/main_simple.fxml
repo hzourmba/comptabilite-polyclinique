@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.comptabilite.view.MainController">
+   <top>
+      <VBox>
+         <children>
+            <MenuBar>
+               <menus>
+                  <Menu text="Fichier">
+                     <items>
+                        <MenuItem text="Nouvelle entreprise" />
+                        <SeparatorMenuItem />
+                        <MenuItem onAction="#handleLogout" text="Déconnexion" />
+                        <MenuItem onAction="#handleExit" text="Quitter" />
+                     </items>
+                  </Menu>
+                  <Menu text="Comptabilité">
+                     <items>
+                        <MenuItem onAction="#showPlanComptable" text="Plan comptable" />
+                        <MenuItem onAction="#showEcrituresComptables" text="Écritures comptables" />
+                        <MenuItem onAction="#showGrandLivre" text="Grand livre" />
+                        <MenuItem onAction="#showBalance" text="Balance" />
+                     </items>
+                  </Menu>
+                  <Menu text="Facturation">
+                     <items>
+                        <MenuItem onAction="#showClients" text="Clients" />
+                        <MenuItem onAction="#showFournisseurs" text="Fournisseurs" />
+                        <MenuItem onAction="#showFactures" text="Factures" />
+                     </items>
+                  </Menu>
+                  <Menu text="Aide">
+                     <items>
+                        <MenuItem onAction="#showAbout" text="À propos" />
+                     </items>
+                  </Menu>
+               </menus>
+            </MenuBar>
+
+            <ToolBar>
+               <items>
+                  <Button onAction="#showEcrituresComptables" text="Écritures" />
+                  <Separator />
+                  <Button onAction="#showPlanComptable" text="Plan comptable" />
+                  <Button onAction="#showBalance" text="Balance" />
+                  <Button onAction="#showClients" text="Clients" />
+                  <Separator />
+                  <Label fx:id="userLabel" text="Utilisateur: ">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </items>
+            </ToolBar>
+         </children>
+      </VBox>
+   </top>
+
+   <center>
+      <VBox alignment="CENTER" spacing="20.0">
+         <children>
+            <Label text="Bienvenue dans votre logiciel de comptabilité">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label text="L'application fonctionne correctement !">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="statusLabel" text="Prêt" />
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
+   </center>
+
+   <bottom>
+      <VBox>
+         <children>
+            <Separator />
+            <HBox spacing="20.0">
+               <children>
+                  <Label text="Application de comptabilité - Version 1.0" />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Label fx:id="dateLabel" text="Date: " />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+   </bottom>
+</BorderPane>

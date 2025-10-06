@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.comptabilite.view.CompteDialogController">
+   <center>
+      <VBox spacing="15.0">
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+
+         <!-- Titre -->
+         <Label fx:id="titleLabel" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Nouveau Compte" />
+
+         <!-- Informations de base -->
+         <VBox spacing="10.0">
+            <Label style="-fx-font-weight: bold;" text="Informations de base" />
+            <Separator />
+
+            <GridPane hgap="10.0" vgap="10.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="NEVER" minWidth="120.0" />
+                  <ColumnConstraints hgrow="ALWAYS" />
+               </columnConstraints>
+
+               <Label text="Numéro de compte :" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+               <TextField fx:id="numeroField" promptText="Ex: 411000 ou CM411000" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+               <Label text="Libellé :" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+               <TextField fx:id="libelleField" promptText="Ex: Clients" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+               <Label text="Type de compte :" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+               <ComboBox fx:id="typeCombo" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+               <Label text="Classe comptable :" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+               <ComboBox fx:id="classeCombo" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            </GridPane>
+         </VBox>
+
+         <!-- Hiérarchie -->
+         <VBox spacing="10.0">
+            <Label style="-fx-font-weight: bold;" text="Hiérarchie" />
+            <Separator />
+
+            <GridPane hgap="10.0" vgap="10.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="NEVER" minWidth="120.0" />
+                  <ColumnConstraints hgrow="ALWAYS" />
+               </columnConstraints>
+
+               <Label text="Compte parent :" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+               <ComboBox fx:id="compteParentCombo" maxWidth="1.7976931348623157E308" promptText="Aucun (compte racine)" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+               <CheckBox fx:id="accepteSousComptesCheck" text="Accepte les sous-comptes" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            </GridPane>
+         </VBox>
+
+         <!-- Soldes -->
+         <VBox spacing="10.0">
+            <Label style="-fx-font-weight: bold;" text="Soldes initiaux" />
+            <Separator />
+
+            <GridPane hgap="10.0" vgap="10.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="NEVER" minWidth="120.0" />
+                  <ColumnConstraints hgrow="ALWAYS" />
+               </columnConstraints>
+
+               <Label text="Solde débiteur :" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+               <TextField fx:id="soldeDebiteurField" promptText="0.00" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+               <Label text="Solde créditeur :" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+               <TextField fx:id="soldeCrediteurField" promptText="0.00" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            </GridPane>
+
+            <Label fx:id="currencyHintLabel" style="-fx-font-size: 11px; -fx-text-fill: gray;" text="Format: 1234,56 (France) ou 1234 (Cameroun)" />
+         </VBox>
+
+         <!-- Paramètres -->
+         <VBox spacing="10.0">
+            <Label style="-fx-font-weight: bold;" text="Paramètres" />
+            <Separator />
+
+            <VBox spacing="5.0">
+               <CheckBox fx:id="actifCheck" selected="true" text="Compte actif" />
+               <CheckBox fx:id="lettreageCheck" text="Compte lettrable" />
+               <CheckBox fx:id="auxiliaireCheck" text="Compte auxiliaire" />
+            </VBox>
+         </VBox>
+
+         <!-- Description -->
+         <VBox spacing="10.0">
+            <Label style="-fx-font-weight: bold;" text="Description" />
+            <Separator />
+
+            <TextArea fx:id="descriptionArea" maxHeight="80.0" minHeight="80.0" promptText="Description optionnelle du compte..." wrapText="true" />
+         </VBox>
+
+      </VBox>
+   </center>
+
+   <bottom>
+      <ButtonBar>
+         <padding>
+            <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
+         </padding>
+         <buttons>
+            <Button fx:id="annulerButton" mnemonicParsing="false" onAction="#annuler" text="Annuler" />
+            <Button fx:id="validerButton" defaultButton="true" mnemonicParsing="false" onAction="#valider" text="Valider" />
+         </buttons>
+      </ButtonBar>
+   </bottom>
+</BorderPane>

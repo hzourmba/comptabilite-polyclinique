@@ -1,0 +1,36 @@
+# Build artifacts
+target/
+*.class
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+
+# Database files
+*.db
+*.sql
+Compta.session.sql
+
+# Large deployment files
+deployment/*.zip
+deployment/*/installers/*.msi
+deployment/*/installers/*.exe
+deployment/offline-package/
+deployment/offline-package-updated-30sept/
+
+# Debug and temporary files
+debug_*.sql
+debug_*.txt
+fix_*.txt
+fix_*.sql
+clean_*.sql
+cleanup_*.sql
+create_*.sql
+identify_*.sql
+solution_*.txt
+*.log
+
+# Test directories
+src/main/java/com/comptabilite/test/
+target/classes/com/comptabilite/test/

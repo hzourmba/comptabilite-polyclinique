@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.comptabilite.view.EcritureDialogController">
+   <children>
+      <!-- En-tête -->
+      <HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-background-color: #f0f0f0; -fx-padding: 10;">
+         <children>
+            <Label text="Nouvelle écriture comptable">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+
+      <!-- Informations générales -->
+      <TitledPane expanded="true" text="Informations générales">
+         <content>
+            <VBox spacing="15.0" style="-fx-padding: 15;">
+               <children>
+                  <HBox spacing="20.0">
+                     <children>
+                        <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="Numéro d'écriture *" />
+                              <TextField fx:id="numeroField" promptText="Auto-généré" />
+                           </children>
+                        </VBox>
+                        <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="Date d'écriture *" />
+                              <DatePicker fx:id="datePicker" prefWidth="150.0" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+
+                  <VBox spacing="5.0">
+                     <children>
+                        <Label text="Libellé *" />
+                        <TextField fx:id="libelleField" promptText="Description de l'écriture" />
+                     </children>
+                  </VBox>
+
+                  <HBox spacing="20.0">
+                     <children>
+                        <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="Journal" />
+                              <TextField fx:id="journalField" promptText="Ex: VTE, ACH, BQ..." />
+                           </children>
+                        </VBox>
+                        <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="Référence pièce" />
+                              <TextField fx:id="referenceField" promptText="Numéro de facture, chèque..." />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </content>
+      </TitledPane>
+
+      <!-- Lignes d'écriture -->
+      <TitledPane expanded="true" text="Lignes d'écriture" VBox.vgrow="ALWAYS">
+         <content>
+            <VBox spacing="10.0" style="-fx-padding: 15;">
+               <children>
+                  <!-- Boutons d'action -->
+                  <HBox spacing="10.0">
+                     <children>
+                        <Button fx:id="ajouterLigneButton" onAction="#ajouterLigne" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Ajouter ligne" />
+                        <Button fx:id="supprimerLigneButton" onAction="#supprimerLigne" style="-fx-background-color: #f44336; -fx-text-fill: white;" text="Supprimer ligne" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Label fx:id="equilibreLabel" text="Équilibre: Non équilibrée" textFill="RED">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+
+                  <!-- Table des lignes -->
+                  <TableView fx:id="lignesTable" prefHeight="300.0" VBox.vgrow="ALWAYS">
+                     <columns>
+                        <TableColumn fx:id="compteColumn" prefWidth="150.0" text="Compte" />
+                        <TableColumn fx:id="compteLibelleColumn" prefWidth="200.0" text="Libellé compte" />
+                        <TableColumn fx:id="ligneLibelleColumn" prefWidth="200.0" text="Libellé ligne" />
+                        <TableColumn fx:id="debitColumn" prefWidth="120.0" text="Débit" />
+                        <TableColumn fx:id="creditColumn" prefWidth="120.0" text="Crédit" />
+                     </columns>
+                  </TableView>
+
+                  <!-- Totaux -->
+                  <HBox spacing="20.0" style="-fx-background-color: #f9f9f9; -fx-padding: 10;">
+                     <children>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <VBox alignment="CENTER_RIGHT" spacing="5.0">
+                           <children>
+                              <Label text="Total Débit">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="totalDebitLabel" text="0,00 €" textFill="BLUE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER_RIGHT" spacing="5.0">
+                           <children>
+                              <Label text="Total Crédit">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="totalCreditLabel" text="0,00 €" textFill="GREEN">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER_RIGHT" spacing="5.0">
+                           <children>
+                              <Label text="Différence">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="differenceLabel" text="0,00 €">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </content>
+      </TitledPane>
+
+      <!-- Boutons d'action -->
+      <HBox alignment="CENTER_RIGHT" spacing="10.0" style="-fx-padding: 15;">
+         <children>
+            <Button fx:id="annulerButton" mnemonicParsing="false" onAction="#annuler" text="Annuler" />
+            <Button fx:id="sauvegarderBrouillonButton" mnemonicParsing="false" onAction="#sauvegarderBrouillon" style="-fx-background-color: #FF9800; -fx-text-fill: white;" text="Sauvegarder brouillon" />
+            <Button fx:id="validerButton" mnemonicParsing="false" onAction="#validerEcriture" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Valider écriture" />
+         </children>
+      </HBox>
+   </children>
+</VBox>

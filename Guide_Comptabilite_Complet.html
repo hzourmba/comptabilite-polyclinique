@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide de Comptabilité - Système Comptable Multi-Devises</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 0.5rem;
+            margin: 2rem 0 1rem 0;
+            font-size: 1.8rem;
+        }
+
+        h3 {
+            color: #34495e;
+            margin: 1.5rem 0 1rem 0;
+            font-size: 1.4rem;
+        }
+
+        h4 {
+            color: #555;
+            margin: 1rem 0 0.5rem 0;
+            font-size: 1.2rem;
+        }
+
+        .toc {
+            background-color: #ecf0f1;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .toc h2 {
+            margin-top: 0;
+            border: none;
+            color: #2c3e50;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .toc li {
+            margin: 0.5rem 0;
+        }
+
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #3498db;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .code-block {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .java-code {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .highlight {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+
+        .success {
+            background-color: #d4edda;
+            border: 1px solid #00b894;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+
+        .warning {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+
+        .checkmark {
+            color: #00b894;
+            font-weight: bold;
+        }
+
+        .cross {
+            color: #e17055;
+            font-weight: bold;
+        }
+
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        li {
+            margin: 0.5rem 0;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .architecture {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: monospace;
+            margin: 1rem 0;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Guide de Comptabilité</h1>
+            <p>Système Comptable Multi-Devises</p>
+        </header>
+
+        <div class="toc">
+            <h2>Table des Matières</h2>
+            <ul>
+                <li><a href="#vue-densemble">1. Vue d'ensemble du système</a></li>
+                <li><a href="#configuration">2. Configuration des entreprises et devises</a></li>
+                <li><a href="#plan-comptable">3. Plan comptable et numérotation</a></li>
+                <li><a href="#capital-actionnaires">4. Gestion du capital et des actionnaires</a></li>
+                <li><a href="#ecritures">5. Écritures comptables</a></li>
+                <li><a href="#etats-financiers">6. États financiers</a></li>
+                <li><a href="#troubleshooting">7. Troubleshooting et bonnes pratiques</a></li>
+            </ul>
+        </div>
+
+        <section class="section" id="vue-densemble">
+            <h2>1. Vue d'ensemble du système</h2>
+
+            <h3>Caractéristiques principales</h3>
+            <ul>
+                <li><strong>Multi-devises</strong> : Support Euro (€) et Franc CFA (FCFA)</li>
+                <li><strong>Multi-normes</strong> : Comptabilité française et OHADA/Cameroun</li>
+                <li><strong>Gestion des actionnaires</strong> : Suivi détaillé des souscriptions et libérations</li>
+                <li><strong>États financiers automatisés</strong> : Balance, Grand Livre, Bilan, Compte de Résultat</li>
+            </ul>
+
+            <h3>Architecture des données</h3>
+            <div class="architecture">
+Entreprise
+├── Utilisateurs
+├── Exercices comptables
+├── Plan comptable (Comptes)
+│   ├── Comptes principaux
+│   └── Sous-comptes (actionnaires, etc.)
+├── Journaux
+└── Écritures comptables
+    └── Lignes d'écriture
+            </div>
+        </section>
+
+        <section class="section" id="configuration">
+            <h2>2. Configuration des entreprises et devises</h2>
+
+            <h3>Détection automatique de la devise</h3>
+            <p>Le système détecte automatiquement la devise et les normes comptables :</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Pays</th>
+                        <th>Devise</th>
+                        <th>Format numérotation</th>
+                        <th>Séparateur décimal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>OHADA</td>
+                        <td>Cameroun, Sénégal, Côte d'Ivoire, etc.</td>
+                        <td>Franc CFA (FCFA)</td>
+                        <td>CMxxxxxxx</td>
+                        <td>Espace (ex: 1 000 000)</td>
+                    </tr>
+                    <tr>
+                        <td>Européenne</td>
+                        <td>France, Allemagne, Belgique, etc.</td>
+                        <td>Euro (€)</td>
+                        <td>xxxxxxx</td>
+                        <td>Virgule (ex: 1 000 000,00)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Configuration dans l'application</h3>
+            <div class="java-code">
+// La détection se fait automatiquement via CurrencyService
+boolean isOHADA = currencyService.isOHADAEntreprise();
+String format = currencyService.getAmountInputFormat();
+            </div>
+        </section>
+
+        <section class="section" id="plan-comptable">
+            <h2>3. Plan comptable et numérotation</h2>
+
+            <h3>Numérotation automatique</h3>
+
+            <h4>Format OHADA (Cameroun)</h4>
+            <div class="code-block">
+CM + Classe + Numéro séquentiel
+Exemples :
+- CM101000 : Capital social
+- CM101001 : Actionnaire Oumarou Gaston
+- CM521000 : Banque principale
+            </div>
+
+            <h4>Format Français</h4>
+            <div class="code-block">
+Classe + Numéro séquentiel
+Exemples :
+- 101000 : Capital social
+- 101001 : Actionnaire 1
+- 512000 : Banque
+            </div>
+
+            <h3>Classes comptables</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Classe</th>
+                        <th>Description</th>
+                        <th>Type</th>
+                        <th>Exemples</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Comptes de capitaux</td>
+                        <td>Passif</td>
+                        <td>Capital, Réserves</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Immobilisations</td>
+                        <td>Actif</td>
+                        <td>Matériel, Brevets</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Stocks</td>
+                        <td>Actif</td>
+                        <td>Marchandises</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Comptes de tiers</td>
+                        <td>Actif/Passif</td>
+                        <td>Clients, Fournisseurs</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Comptes financiers</td>
+                        <td>Actif</td>
+                        <td>Banque, Caisse</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Charges</td>
+                        <td>Résultat</td>
+                        <td>Achats, Salaires</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Produits</td>
+                        <td>Résultat</td>
+                        <td>Ventes, Prestations</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="section" id="capital-actionnaires">
+            <h2>4. Gestion du capital et des actionnaires</h2>
+
+            <h3>Stratégie recommandée : Écritures comptables</h3>
+
+            <div class="success">
+                <strong>Nouvelle approche (recommandée) :</strong>
+                <ol>
+                    <li>Créer les sous-comptes actionnaires à solde zéro</li>
+                    <li>Enregistrer chaque libération par écriture comptable</li>
+                </ol>
+            </div>
+
+            <div class="highlight">
+                <strong>Avantages :</strong>
+                <ul>
+                    <li><span class="checkmark">✅</span> Traçabilité complète des mouvements</li>
+                    <li><span class="checkmark">✅</span> Historique des libérations</li>
+                    <li><span class="checkmark">✅</span> Facilite les audits</li>
+                    <li><span class="checkmark">✅</span> Respect des normes comptables</li>
+                </ul>
+            </div>
+
+            <h3>Structure des comptes capital</h3>
+            <div class="architecture">
+CM101000 - Capital Social (compte principal)
+├── CM101001 - Oumarou Gaston
+├── CM101002 - Dembe Jean Claude
+├── CM101003 - Abba Moussa
+└── CM101004 - Adam Teichert Moussa
+            </div>
+
+            <h3>Écritures type pour libération</h3>
+            <div class="code-block">
+Date: [Date de virement]
+Libellé: Libération capital - [Nom actionnaire]
+
+Débit  : CM521000 (Banque)          [Montant versé]
+Crédit : CM101001 (Actionnaire)     [Montant versé]
+            </div>
+
+            <h3>Gestion des cas particuliers</h3>
+
+            <h4>Actionnaire déficitaire (doit encore payer)</h4>
+            <div class="warning">
+                Solde du sous-compte : Débiteur (+)<br>
+                → Apparaît en <strong>CRÉANCES</strong> au bilan (Actif)
+            </div>
+
+            <h4>Actionnaire excédentaire (a trop payé)</h4>
+            <div class="highlight">
+                Solde du sous-compte : Créditeur (-)<br>
+                → Apparaît en <strong>DETTES</strong> au bilan (Passif)
+            </div>
+        </section>
+
+        <section class="section" id="ecritures">
+            <h2>5. Écritures comptables</h2>
+
+            <h3>Principes de base</h3>
+
+            <h4>Équilibre obligatoire</h4>
+            <div class="code-block">
+Σ Débits = Σ Crédits
+            </div>
+
+            <h4>Numérotation automatique</h4>
+            <ul>
+                <li>Format : <code>[ANNÉE]-[JOURNAL]-[NUMÉRO]</code></li>
+                <li>Exemple : <code>2024-VT-001</code></li>
+            </ul>
+
+            <h3>Types d'écritures courantes</h3>
+
+            <h4>1. Libération de capital</h4>
+            <div class="code-block">
+Débit  : 512000 (Banque)
+Crédit : 101001 (Actionnaire)
+            </div>
+
+            <h4>2. Achat d'immobilisation</h4>
+            <div class="code-block">
+Débit  : 215000 (Matériel médical)
+Débit  : 445660 (TVA déductible)
+Crédit : 404000 (Fournisseur)
+            </div>
+
+            <h4>3. Vente de prestation</h4>
+            <div class="code-block">
+Débit  : 411000 (Client)
+Crédit : 706000 (Prestations)
+Crédit : 445711 (TVA collectée)
+            </div>
+
+            <h3>Validation des écritures</h3>
+            <p>Le système vérifie automatiquement :</p>
+            <ul>
+                <li><span class="checkmark">✅</span> Équilibre débit/crédit</li>
+                <li><span class="checkmark">✅</span> Comptes existants</li>
+                <li><span class="checkmark">✅</span> Montants > 0</li>
+                <li><span class="checkmark">✅</span> Date dans l'exercice</li>
+            </ul>
+        </section>
+
+        <section class="section" id="etats-financiers">
+            <h2>6. États financiers</h2>
+
+            <h3>1. Balance</h3>
+            <p><strong>Colonnes affichées :</strong></p>
+            <ul>
+                <li>Numéro de compte</li>
+                <li>Libellé</li>
+                <li>Total Débit</li>
+                <li>Total Crédit</li>
+                <li>Solde Débiteur</li>
+                <li>Solde Créditeur</li>
+            </ul>
+            <p><strong>Utilisation :</strong> Vérification de l'équilibre comptable</p>
+
+            <h3>2. Grand Livre</h3>
+            <p><strong>Informations par compte :</strong></p>
+            <ul>
+                <li>Historique de tous les mouvements</li>
+                <li>Solde cumule progressive</li>
+                <li>Filtrage par période</li>
+            </ul>
+            <p><strong>Utilisation :</strong> Analyse détaillée d'un compte</p>
+
+            <h3>3. Bilan</h3>
+
+            <h4>Structure Actif/Passif</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ACTIF</th>
+                        <th>PASSIF</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Immobilisations (Classe 2)</td>
+                        <td>Capitaux propres (Capital + Résultat)</td>
+                    </tr>
+                    <tr>
+                        <td>Actif circulant (Classe 3)</td>
+                        <td>Dettes (Fournisseurs + Sur-libérations)</td>
+                    </tr>
+                    <tr>
+                        <td>Créances (Actions non libérées)</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Trésorerie (Banque, Caisse)</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Logique de consolidation</h4>
+            <div class="java-code">
+// Comptes avec sous-comptes : utilise la consolidation
+BigDecimal soldeConsolide = compte.getSoldeDebiteurConsolide();
+
+// Évite le double comptage parent/enfant
+boolean hasSubAccounts = compte.getSousComptes() != null && !compte.getSousComptes().isEmpty();
+            </div>
+
+            <h4>Traitement spécifique du capital</h4>
+            <ol>
+                <li><strong>Capital principal (CM101000)</strong> → Passif (576 000 000)</li>
+                <li><strong>Sous-comptes actionnaires :</strong>
+                    <ul>
+                        <li>Solde débiteur → Créances (actions non libérées)</li>
+                        <li>Solde créditeur → Dettes (sur-libérations)</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3>4. Compte de Résultat</h3>
+            <p><strong>Structure :</strong></p>
+            <ul>
+                <li>Chiffre d'affaires (Classe 7)</li>
+                <li>Charges d'exploitation (Classe 6)</li>
+                <li>Résultat net = Produits - Charges</li>
+            </ul>
+            <div class="highlight">
+                <strong>Note :</strong> Vide en phase de constitution (normal)
+            </div>
+        </section>
+
+        <section class="section" id="troubleshooting">
+            <h2>7. Troubleshooting et bonnes pratiques</h2>
+
+            <h3>Problèmes courants et solutions</h3>
+
+            <h4>1. Bilan déséquilibré</h4>
+            <div class="error">
+                <strong>Cause :</strong> Double comptage parent/enfant
+            </div>
+            <div class="success">
+                <strong>Solution :</strong>
+                <div class="java-code">
+// Exclure les comptes parents qui ont des sous-comptes
+boolean hasSubAccounts = compte.getSousComptes() != null && !compte.getSousComptes().isEmpty();
+if (!hasSubAccounts) {
+    // Traiter seulement les comptes finaux
+}
+                </div>
+            </div>
+
+            <h4>2. Compte de résultat qui ne s'exécute pas</h4>
+            <div class="error">
+                <strong>Cause :</strong> Problème d'extraction de classe pour comptes OHADA
+            </div>
+            <div class="success">
+                <strong>Solution :</strong>
+                <div class="java-code">
+// Gestion des deux formats
+if (numeroCompte.startsWith("CM") && numeroCompte.length() > 2) {
+    return Integer.parseInt(numeroCompte.substring(2, 3)); // CM6xxxx → 6
+} else {
+    return Integer.parseInt(numeroCompte.substring(0, 1)); // 6xxxx → 6
+}
+                </div>
+            </div>
+
+            <h4>3. Créances mal calculées</h4>
+            <div class="error">
+                <strong>Cause :</strong> Confusion entre logique globale et détaillée
+            </div>
+            <div class="success">
+                <strong>Solution :</strong> Traiter chaque actionnaire individuellement
+                <div class="java-code">
+if (soldeNet.compareTo(BigDecimal.ZERO) > 0) {
+    creances = creances.add(soldeNet); // Doit encore payer
+} else if (soldeNet.compareTo(BigDecimal.ZERO) < 0) {
+    dettes = dettes.add(soldeNet.abs()); // A trop payé
+}
+                </div>
+            </div>
+
+            <h3>Bonnes pratiques</h3>
+
+            <h4>1. Saisie des écritures</h4>
+            <ul>
+                <li><span class="checkmark">✅</span> Toujours équilibrer débit = crédit</li>
+                <li><span class="checkmark">✅</span> Utiliser des libellés explicites</li>
+                <li><span class="checkmark">✅</span> Vérifier les comptes utilisés</li>
+                <li><span class="checkmark">✅</span> Respecter la chronologie</li>
+            </ul>
+
+            <h4>2. Gestion des actionnaires</h4>
+            <ul>
+                <li><span class="checkmark">✅</span> Créer un sous-compte par actionnaire</li>
+                <li><span class="checkmark">✅</span> Enregistrer chaque virement par écriture</li>
+                <li><span class="checkmark">✅</span> Éviter les soldes "magiques" sans justification</li>
+                <li><span class="checkmark">✅</span> Documenter les sur-libérations</li>
+            </ul>
+
+            <h4>3. Clôture d'exercice</h4>
+            <ul>
+                <li><span class="checkmark">✅</span> Vérifier l'équilibre de la balance</li>
+                <li><span class="checkmark">✅</span> Contrôler la cohérence bilan/balance</li>
+                <li><span class="checkmark">✅</span> Justifier tous les écarts</li>
+                <li><span class="checkmark">✅</span> Sauvegarder les états avant clôture</li>
+            </ul>
+
+            <h4>4. Maintenance du système</h4>
+            <ul>
+                <li><span class="checkmark">✅</span> Sauvegardes régulières de la base</li>
+                <li><span class="checkmark">✅</span> Contrôles d'intégrité périodiques</li>
+                <li><span class="checkmark">✅</span> Formation des utilisateurs</li>
+                <li><span class="checkmark">✅</span> Documentation des procédures spécifiques</li>
+            </ul>
+
+            <h3>Évolution du système</h3>
+
+            <h4>Phases d'utilisation</h4>
+            <ol>
+                <li><strong>Constitution</strong> → Capital, actionnaires, trésorerie</li>
+                <li><strong>Investissement</strong> → Achats matériel, aménagements (charges)</li>
+                <li><strong>Exploitation</strong> → Facturation clients (produits)</li>
+                <li><strong>Maturité</strong> → Gestion complète actif/passif/résultat</li>
+            </ol>
+
+            <h4>Fonctionnalités avancées</h4>
+            <ul>
+                <li>Gestion de la TVA</li>
+                <li>Immobilisations et amortissements</li>
+                <li>Paie et charges sociales</li>
+                <li>Analyse financière</li>
+                <li>Budgets et prévisions</li>
+                <li>Consolidation multi-sociétés</li>
+            </ul>
+        </section>
+
+        <footer>
+            <p><strong>Guide créé le :</strong> 2025</p>
+            <p><strong>Version :</strong> 1.0</p>
+            <p><strong>Dernière mise à jour :</strong> 2025</p>
+            <hr style="margin: 1rem 0; border-color: #34495e;">
+            <p>Pour toute question ou amélioration du système :</p>
+            <ol style="text-align: left; max-width: 400px; margin: 1rem auto;">
+                <li>Consulter les logs de l'application</li>
+                <li>Vérifier ce guide de référence</li>
+                <li>Tester sur données d'exemple</li>
+                <li>Documenter les cas particuliers</li>
+            </ol>
+        </footer>
+    </div>
+</body>
+</html>

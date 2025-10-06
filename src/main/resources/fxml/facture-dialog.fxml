@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.comptabilite.view.FactureDialogController">
+   <top>
+      <VBox>
+         <children>
+            <!-- Titre -->
+            <Label fx:id="titreLabel" styleClass="dialog-title" text="Nouvelle Facture">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="15.0" right="15.0" top="15.0" />
+               </VBox.margin>
+            </Label>
+
+            <Separator />
+         </children>
+      </VBox>
+   </top>
+
+   <center>
+      <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
+         <content>
+            <VBox spacing="15.0">
+               <children>
+                  <!-- Informations générales -->
+                  <TitledPane collapsible="false" text="Informations générales">
+                     <content>
+                        <GridPane hgap="15.0" vgap="10.0">
+                           <columnConstraints>
+                              <ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="120.0" />
+                              <ColumnConstraints hgrow="ALWAYS" minWidth="200.0" />
+                              <ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="120.0" />
+                              <ColumnConstraints hgrow="ALWAYS" minWidth="200.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints vgrow="NEVER" />
+                              <RowConstraints vgrow="NEVER" />
+                              <RowConstraints vgrow="NEVER" />
+                              <RowConstraints vgrow="NEVER" />
+                           </rowConstraints>
+
+                           <children>
+                              <Label text="N° Facture :" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                              <TextField fx:id="numeroField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                              <Label text="Date :" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                              <DatePicker fx:id="dateFacturePicker" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+
+                              <Label text="Type :" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                              <Label fx:id="typeLabel" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                              <Label text="Date échéance :" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <DatePicker fx:id="dateEcheancePicker" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+
+                              <Label fx:id="partenaireLabel" text="Client :" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                              <ComboBox fx:id="partenaireCombo" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                              <Label text="Mode paiement :" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                              <ComboBox fx:id="modePaiementCombo" maxWidth="Infinity" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+
+                              <Label text="Objet :" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                              <TextField fx:id="objetField" GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.rowIndex="3" />
+
+                              <Label text="Taux TVA % :" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                              <TextField fx:id="tauxTVAField" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </GridPane>
+                     </content>
+                  </TitledPane>
+
+                  <!-- Lignes de facture -->
+                  <TitledPane collapsible="false" text="Détails de la facture">
+                     <content>
+                        <VBox spacing="10.0">
+                           <children>
+                              <!-- Saisie des lignes -->
+                              <GridPane hgap="10.0" vgap="10.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="120.0" />
+                                    <ColumnConstraints hgrow="ALWAYS" minWidth="200.0" />
+                                    <ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="80.0" />
+                                    <ColumnConstraints hgrow="NEVER" minWidth="100.0" />
+                                    <ColumnConstraints hgrow="NEVER" minWidth="100.0" />
+                                 </columnConstraints>
+                                 <children>
+                                    <Label text="Désignation :" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                    <TextField fx:id="designationLigneField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                    <Label text="Quantité :" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                                    <TextField fx:id="quantiteField" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                                    <TextField fx:id="prixUnitaireField" promptText="Prix unitaire" GridPane.columnIndex="4" GridPane.rowIndex="0" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </GridPane>
+
+                              <!-- Actions sur les lignes -->
+                              <HBox spacing="10.0">
+                                 <children>
+                                    <Button fx:id="ajouterLigneButton" onAction="#ajouterLigne" styleClass="primary-button" text="Ajouter ligne" />
+                                    <Button fx:id="supprimerLigneButton" onAction="#supprimerLigne" styleClass="danger-button" text="Supprimer ligne" />
+                                 </children>
+                              </HBox>
+
+                              <!-- Tableau des lignes -->
+                              <TableView fx:id="lignesTable" editable="true" prefHeight="200.0">
+                                 <columns>
+                                    <TableColumn fx:id="designationColumn" minWidth="200.0" prefWidth="250.0" text="Désignation" />
+                                    <TableColumn fx:id="quantiteColumn" minWidth="80.0" prefWidth="100.0" text="Quantité" />
+                                    <TableColumn fx:id="prixUnitaireColumn" minWidth="100.0" prefWidth="120.0" text="Prix unitaire" />
+                                    <TableColumn fx:id="remiseColumn" minWidth="80.0" prefWidth="100.0" text="Remise %" />
+                                    <TableColumn fx:id="tauxTvaColumn" minWidth="80.0" prefWidth="100.0" text="TVA %" />
+                                    <TableColumn fx:id="montantHTColumn" editable="false" minWidth="100.0" prefWidth="120.0" text="Montant HT" />
+                                    <TableColumn fx:id="montantTtcColumn" editable="false" minWidth="100.0" prefWidth="120.0" text="Montant TTC" />
+                                 </columns>
+                              </TableView>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </VBox>
+                     </content>
+                  </TitledPane>
+
+                  <!-- Totaux -->
+                  <TitledPane collapsible="false" text="Totaux">
+                     <content>
+                        <GridPane hgap="15.0" vgap="5.0">
+                           <columnConstraints>
+                              <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" />
+                              <ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="150.0" />
+                           </columnConstraints>
+
+                           <children>
+                              <Label text="Total HT :" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                              <Label fx:id="montantHTLabel" styleClass="amount-label" text="0,00 €" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                              <Label text="Total TVA :" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                              <Label fx:id="montantTVALabel" styleClass="amount-label" text="0,00 €" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                              <Label text="Total TTC :" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                              <Label fx:id="montantTTCLabel" styleClass="amount-total" text="0,00 €" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </GridPane>
+                     </content>
+                  </TitledPane>
+
+                  <!-- Commentaires -->
+                  <TitledPane collapsible="false" text="Commentaires et notes">
+                     <content>
+                        <TextArea fx:id="commentairesArea" prefRowCount="3" promptText="Commentaires, conditions particulières..." wrapText="true">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </TextArea>
+                     </content>
+                  </TitledPane>
+               </children>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </center>
+
+   <bottom>
+      <VBox>
+         <children>
+            <Separator />
+
+            <!-- Boutons d'action -->
+            <HBox alignment="CENTER_RIGHT" spacing="10.0">
+               <children>
+                  <Button fx:id="annulerButton" cancelButton="true" mnemonicParsing="false" onAction="#annuler" text="Annuler" />
+                  <Button fx:id="validerButton" defaultButton="true" mnemonicParsing="false" onAction="#valider" styleClass="primary-button" text="Enregistrer" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </bottom>
+</BorderPane>
