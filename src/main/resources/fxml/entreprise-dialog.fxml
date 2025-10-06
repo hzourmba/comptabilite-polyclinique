@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<DialogPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.comptabilite.view.EntrepriseDialogController">
+   <header>
+      <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Gestion des Entreprises" />
+   </header>
+   <content>
+      <VBox spacing="15">
+         <padding>
+            <Insets bottom="10" left="10" right="10" top="10" />
+         </padding>
+
+         <!-- Informations générales -->
+         <TitledPane expanded="true" text="Informations générales">
+            <VBox spacing="10">
+               <GridPane hgap="10" vgap="10">
+                  <columnConstraints>
+                     <ColumnConstraints minWidth="120" />
+                     <ColumnConstraints minWidth="250" />
+                  </columnConstraints>
+
+                  <Label text="Raison sociale *:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                  <TextField fx:id="raisonSocialeField" promptText="Nom de l'entreprise" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                  <Label text="Forme juridique *:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                  <ComboBox fx:id="formeJuridiqueCombo" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                  <Label text="Capital social:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                  <HBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <TextField fx:id="capitalSocialField" promptText="0.00" />
+                     <Label fx:id="deviseLabel" text="FCFA" />
+                  </HBox>
+
+                  <Label text="Pays *:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                  <ComboBox fx:id="paysCombo" editable="true" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+               </GridPane>
+            </VBox>
+         </TitledPane>
+
+         <!-- Identifiants légaux -->
+         <TitledPane expanded="true" text="Identifiants légaux">
+            <GridPane hgap="10" vgap="10">
+               <columnConstraints>
+                  <ColumnConstraints minWidth="120" />
+                  <ColumnConstraints minWidth="250" />
+               </columnConstraints>
+
+               <Label text="SIRET:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+               <TextField fx:id="siretField" promptText="14 chiffres" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+               <Label text="SIREN:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+               <TextField fx:id="sirenField" promptText="9 chiffres" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+               <Label text="Numéro TVA:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+               <TextField fx:id="numeroTVAField" promptText="Ex: FR12345678901" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            </GridPane>
+         </TitledPane>
+
+         <!-- Coordonnées -->
+         <TitledPane expanded="false" text="Coordonnées">
+            <GridPane hgap="10" vgap="10">
+               <columnConstraints>
+                  <ColumnConstraints minWidth="120" />
+                  <ColumnConstraints minWidth="250" />
+               </columnConstraints>
+
+               <Label text="Adresse:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+               <TextField fx:id="adresseField" promptText="Adresse complète" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+               <Label text="Code postal:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+               <TextField fx:id="codePostalField" promptText="Code postal" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+               <Label text="Ville:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+               <TextField fx:id="villeField" promptText="Ville" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+               <Label text="Téléphone:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+               <TextField fx:id="telephoneField" promptText="Ex: +237 123 456 789" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+               <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+               <TextField fx:id="emailField" promptText="contact@entreprise.com" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+               <Label text="Site web:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+               <TextField fx:id="siteWebField" promptText="https://www.entreprise.com" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            </GridPane>
+         </TitledPane>
+
+         <!-- Statut -->
+         <HBox spacing="10" alignment="CENTER_LEFT">
+            <CheckBox fx:id="activeCheckBox" selected="true" text="Entreprise active" />
+         </HBox>
+
+         <!-- Messages d'aide -->
+         <Label fx:id="helpLabel" style="-fx-text-fill: #666; -fx-font-size: 11px;"
+                text="* Champs obligatoires. La devise sera automatiquement détectée selon le pays."
+                wrapText="true" />
+      </VBox>
+   </content>
+   <buttonTypes>
+      <ButtonType fx:constant="OK" />
+      <ButtonType fx:constant="CANCEL" />
+   </buttonTypes>
+</DialogPane>

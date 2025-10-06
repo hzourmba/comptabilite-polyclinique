@@ -250,12 +250,54 @@ public class MainController implements Initializable {
 
     @FXML
     private void handleNewCompany(ActionEvent event) {
-        showInfo("Nouvelle entreprise en cours de développement");
+        try {
+            // Charger le dialog FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/entreprise-dialog.fxml"));
+            DialogPane dialogPane = loader.load();
+
+            // Créer le dialog
+            Dialog<ButtonType> dialog = new Dialog<>();
+            dialog.setDialogPane(dialogPane);
+            dialog.setTitle("Nouvelle Entreprise");
+
+            // Configurer la fenêtre
+            dialog.initOwner(primaryStage);
+            dialog.setResizable(true);
+
+            // Obtenir le contrôleur
+            EntrepriseDialogController controller = loader.getController();
+            controller.setEntreprise(null); // Nouvelle entreprise
+
+            // Afficher le dialog et traiter le résultat
+            dialog.showAndWait().ifPresent(result -> {
+                if (result == ButtonType.OK) {
+                    if (controller.validate()) {
+                        var entreprise = controller.getEntreprise();
+                        if (controller.saveEntreprise()) {
+                            showInfo("Entreprise '" + entreprise.getRaisonSociale() + "' créée avec succès!");
+                            logger.info("Nouvelle entreprise créée: {}", entreprise.getRaisonSociale());
+                        }
+                    }
+                }
+            });
+
+        } catch (IOException e) {
+            logger.error("Erreur lors de l'ouverture du dialog entreprise", e);
+            showError("Erreur", "Impossible d'ouvrir l'interface de création d'entreprise.\nErreur: " + e.getMessage());
+        }
     }
 
     private void showInfo(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private void showError(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
