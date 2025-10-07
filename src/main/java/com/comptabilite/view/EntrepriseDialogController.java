@@ -2,6 +2,7 @@ package com.comptabilite.view;
 
 import com.comptabilite.model.Entreprise;
 import com.comptabilite.service.CurrencyService;
+import com.comptabilite.service.EntrepriseInitializationService;
 import com.comptabilite.dao.EntrepriseDAO;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -41,12 +42,14 @@ public class EntrepriseDialogController implements Initializable {
 
     private final EntrepriseDAO entrepriseDAO;
     private final CurrencyService currencyService;
+    private final EntrepriseInitializationService initService;
     private Entreprise entreprise;
     private boolean newEntreprise = true;
 
     public EntrepriseDialogController() {
         this.entrepriseDAO = new EntrepriseDAO();
         this.currencyService = CurrencyService.getInstance();
+        this.initService = new EntrepriseInitializationService();
     }
 
     @Override
@@ -264,13 +267,41 @@ public class EntrepriseDialogController implements Initializable {
     public boolean saveEntreprise() {
         try {
             if (newEntreprise) {
+                // 1. Sauvegarder l'entreprise
                 entrepriseDAO.save(entreprise);
                 logger.info("Nouvelle entreprise créée: {}", entreprise.getRaisonSociale());
+
+                // 2. Initialisation complète (exercice, plan comptable, utilisateur admin)
+                logger.info("Initialisation automatique de l'entreprise...");
+                boolean initSuccess = initService.initializeEntreprise(entreprise);
+
+                if (initSuccess) {
+                    // 3. Afficher le résumé de l'initialisation
+                    String summary = initService.getInitializationSummary(entreprise);
+
+                    Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                    successAlert.setTitle("Entreprise créée avec succès");
+                    successAlert.setHeaderText("Initialisation complète terminée");
+                    successAlert.setContentText(summary);
+                    successAlert.setResizable(true);
+                    successAlert.showAndWait();
+                } else {
+                    // Avertissement si l'initialisation a échoué
+                    Alert warningAlert = new Alert(Alert.AlertType.WARNING);
+                    warningAlert.setTitle("Entreprise créée");
+                    warningAlert.setHeaderText("Initialisation partielle");
+                    warningAlert.setContentText("L'entreprise a été créée mais l'initialisation automatique " +
+                                               "(exercice, plan comptable, utilisateur) a échoué.\n\n" +
+                                               "Vous devrez configurer ces éléments manuellement.");
+                    warningAlert.showAndWait();
+                }
             } else {
+                // Mise à jour d'une entreprise existante
                 entrepriseDAO.update(entreprise);
                 logger.info("Entreprise mise à jour: {}", entreprise.getRaisonSociale());
             }
             return true;
+
         } catch (Exception e) {
             logger.error("Erreur lors de la sauvegarde de l'entreprise", e);
 

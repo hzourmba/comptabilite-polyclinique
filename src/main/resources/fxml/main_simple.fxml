@@ -13,7 +13,7 @@
                <menus>
                   <Menu text="Fichier">
                      <items>
-                        <MenuItem text="Nouvelle entreprise" />
+                        <MenuItem onAction="#handleNewCompany" text="Nouvelle entreprise" />
                         <SeparatorMenuItem />
                         <MenuItem onAction="#handleLogout" text="Déconnexion" />
                         <MenuItem onAction="#handleExit" text="Quitter" />
