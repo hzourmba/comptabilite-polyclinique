@@ -1,8 +1,10 @@
 package com.comptabilite.view;
 
 import com.comptabilite.model.Entreprise;
+import com.comptabilite.model.Utilisateur;
 import com.comptabilite.service.CurrencyService;
 import com.comptabilite.service.EntrepriseInitializationService;
+import com.comptabilite.service.AuthenticationService;
 import com.comptabilite.dao.EntrepriseDAO;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -43,6 +45,7 @@ public class EntrepriseDialogController implements Initializable {
     private final EntrepriseDAO entrepriseDAO;
     private final CurrencyService currencyService;
     private final EntrepriseInitializationService initService;
+    private final AuthenticationService authService;
     private Entreprise entreprise;
     private boolean newEntreprise = true;
 
@@ -50,6 +53,7 @@ public class EntrepriseDialogController implements Initializable {
         this.entrepriseDAO = new EntrepriseDAO();
         this.currencyService = CurrencyService.getInstance();
         this.initService = new EntrepriseInitializationService();
+        this.authService = AuthenticationService.getInstance();
     }
 
     @Override
@@ -70,7 +74,13 @@ public class EntrepriseDialogController implements Initializable {
             "Niger", "Tchad", "République Centrafricaine", "Gabon", "Congo",
             "République Démocratique du Congo", "Belgique", "Canada"
         ));
-        paysCombo.setValue("Cameroun");
+
+        // Détection intelligente du pays par défaut selon l'utilisateur connecté
+        String defaultCountry = getDefaultCountryForCurrentUser();
+        paysCombo.setValue(defaultCountry);
+
+        // Mise à jour immédiate de la devise selon le pays par défaut
+        updateCurrencyDisplay(defaultCountry);
     }
 
     private void setupValidation() {
@@ -108,19 +118,28 @@ public class EntrepriseDialogController implements Initializable {
     private void setupCurrencyDetection() {
         paysCombo.valueProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
-                String currency = getCurrencyForCountry(newVal);
-                deviseLabel.setText(currency);
-
-                // Mise à jour du placeholder selon le pays
-                if ("FCFA".equals(currency)) {
-                    capitalSocialField.setPromptText("Ex: 1000000");
-                    helpLabel.setText("* Champs obligatoires. Devise: FCFA (Franc CFA). Forme juridique adaptée au droit OHADA.");
-                } else {
-                    capitalSocialField.setPromptText("Ex: 10000");
-                    helpLabel.setText("* Champs obligatoires. Devise: " + currency + ". Règles fiscales selon le pays sélectionné.");
-                }
+                updateCurrencyDisplay(newVal);
             }
         });
+    }
+
+    /**
+     * Met à jour l'affichage de la devise et les éléments liés selon le pays
+     */
+    private void updateCurrencyDisplay(String pays) {
+        if (pays != null) {
+            String currency = getCurrencyForCountry(pays);
+            deviseLabel.setText(currency);
+
+            // Mise à jour du placeholder selon le pays
+            if ("FCFA".equals(currency)) {
+                capitalSocialField.setPromptText("Ex: 1000000");
+                helpLabel.setText("* Champs obligatoires. Devise: FCFA (Franc CFA). Forme juridique adaptée au droit OHADA.");
+            } else {
+                capitalSocialField.setPromptText("Ex: 10000");
+                helpLabel.setText("* Champs obligatoires. Devise: " + currency + ". Règles fiscales selon le pays sélectionné.");
+            }
+        }
     }
 
     private void validateField(TextField field, boolean valid) {
@@ -313,6 +332,47 @@ public class EntrepriseDialogController implements Initializable {
 
             return false;
         }
+    }
+
+    /**
+     * Détecte le pays par défaut selon l'utilisateur connecté
+     */
+    private String getDefaultCountryForCurrentUser() {
+        try {
+            if (authService.isUserLoggedIn()) {
+                Utilisateur currentUser = authService.getUtilisateurConnecte();
+                if (currentUser != null) {
+                    String username = currentUser.getNomUtilisateur();
+                    if (username != null) {
+                        String usernameLower = username.toLowerCase();
+
+                        // Détection basée sur le nom d'utilisateur
+                        if (usernameLower.contains("france") || usernameLower.contains("francais")) {
+                            return "France";
+                        } else if (usernameLower.contains("cameroun") || usernameLower.contains("cm")) {
+                            return "Cameroun";
+                        } else if (usernameLower.contains("senegal") || usernameLower.contains("sn")) {
+                            return "Sénégal";
+                        } else if (usernameLower.contains("belgique") || usernameLower.contains("be")) {
+                            return "Belgique";
+                        } else if (usernameLower.contains("canada") || usernameLower.contains("ca")) {
+                            return "Canada";
+                        }
+                    }
+
+                    // Tentative de récupération du contexte de l'entreprise de l'utilisateur
+                    Entreprise userEntreprise = currentUser.getEntreprise();
+                    if (userEntreprise != null && userEntreprise.getPays() != null) {
+                        return userEntreprise.getPays();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            logger.warn("Impossible de déterminer le contexte utilisateur: {}", e.getMessage());
+        }
+
+        // Par défaut: Cameroun (système principal)
+        return "Cameroun";
     }
 
     /**

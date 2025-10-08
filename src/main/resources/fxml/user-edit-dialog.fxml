@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<DialogPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.comptabilite.view.UserEditDialogController">
+   <content>
+      <VBox spacing="15.0">
+         <children>
+            <Label fx:id="titleLabel" text="Nouvel Utilisateur">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+
+            <Separator />
+
+            <!-- Informations personnelles -->
+            <GridPane hgap="10.0" vgap="15.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="NEVER" minWidth="120.0" />
+                  <ColumnConstraints hgrow="ALWAYS" minWidth="200.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+               </rowConstraints>
+
+               <Label text="*Nom d'utilisateur:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+               <TextField fx:id="usernameField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+               <Label text="*Prénom:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+               <TextField fx:id="firstNameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+               <Label text="*Nom:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+               <TextField fx:id="lastNameField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+               <Label text="*Email:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+               <TextField fx:id="emailField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+               <Label text="*Rôle:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+               <ComboBox fx:id="roleComboBox" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+               <Label text="Actif:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+               <CheckBox fx:id="activeCheckBox" selected="true" text="Utilisateur actif" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            </GridPane>
+
+            <Separator />
+
+            <!-- Section mot de passe (pour nouveau utilisateur seulement) -->
+            <VBox fx:id="passwordSection" spacing="10.0">
+               <children>
+                  <Label text="Mot de Passe Initial">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+
+                  <GridPane hgap="10.0" vgap="15.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="NEVER" minWidth="120.0" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="200.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints />
+                     </rowConstraints>
+
+                     <Label text="*Mot de passe:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                     <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                     <Label text="*Confirmer:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                     <PasswordField fx:id="confirmPasswordField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  </GridPane>
+               </children>
+            </VBox>
+
+            <Label fx:id="errorLabel" textFill="RED" visible="false" wrapText="true" />
+            <Label fx:id="successLabel" textFill="GREEN" visible="false" wrapText="true" />
+
+            <Label text="* Champs obligatoires">
+               <font>
+                  <Font name="System Italic" size="11.0" />
+               </font>
+            </Label>
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
+   </content>
+   <buttonTypes>
+      <ButtonType fx:constant="OK" />
+      <ButtonType fx:constant="CANCEL" />
+   </buttonTypes>
+</DialogPane>

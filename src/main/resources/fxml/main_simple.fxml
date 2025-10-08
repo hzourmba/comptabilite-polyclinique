@@ -34,6 +34,12 @@
                         <MenuItem onAction="#showFactures" text="Factures" />
                      </items>
                   </Menu>
+                  <Menu fx:id="administrationMenu" text="Administration">
+                     <items>
+                        <MenuItem onAction="#showUserProfile" text="Mon profil" />
+                        <MenuItem fx:id="userManagementMenuItem" onAction="#showUtilisateurs" text="Gestion des utilisateurs" />
+                     </items>
+                  </Menu>
                   <Menu text="Aide">
                      <items>
                         <MenuItem onAction="#showAbout" text="À propos" />

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<DialogPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.comptabilite.view.UserProfileDialogController">
+   <content>
+      <VBox spacing="15.0">
+         <children>
+            <Label text="Modification du Profil Utilisateur">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+
+            <Separator />
+
+            <!-- Informations de base -->
+            <GridPane hgap="10.0" vgap="15.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="NEVER" minWidth="120.0" />
+                  <ColumnConstraints hgrow="ALWAYS" minWidth="200.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+               </rowConstraints>
+
+               <Label text="Nom d'utilisateur:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+               <TextField fx:id="usernameField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+               <Label text="Prénom:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+               <TextField fx:id="prenomField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+               <Label text="Nom:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+               <TextField fx:id="nomField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+               <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+               <TextField fx:id="emailField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+               <Label text="Rôle:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+               <Label fx:id="roleLabel" text="Administrateur" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <font>
+                     <Font name="System Italic" size="12.0" />
+                  </font>
+               </Label>
+            </GridPane>
+
+            <Separator />
+
+            <!-- Section changement de mot de passe -->
+            <Label text="Changement de Mot de Passe">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+
+            <CheckBox fx:id="changePasswordCheckBox" text="Modifier le mot de passe" />
+
+            <GridPane fx:id="passwordGrid" hgap="10.0" vgap="15.0" disable="true">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="NEVER" minWidth="120.0" />
+                  <ColumnConstraints hgrow="ALWAYS" minWidth="200.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+               </rowConstraints>
+
+               <Label text="Mot de passe actuel:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+               <PasswordField fx:id="currentPasswordField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+               <Label text="Nouveau mot de passe:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+               <PasswordField fx:id="newPasswordField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+               <Label text="Confirmer nouveau:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+               <PasswordField fx:id="confirmPasswordField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            </GridPane>
+
+            <Label fx:id="errorLabel" textFill="RED" visible="false" />
+            <Label fx:id="successLabel" textFill="GREEN" visible="false" />
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
+   </content>
+   <buttonTypes>
+      <ButtonType fx:constant="OK" />
+      <ButtonType fx:constant="CANCEL" />
+   </buttonTypes>
+</DialogPane>

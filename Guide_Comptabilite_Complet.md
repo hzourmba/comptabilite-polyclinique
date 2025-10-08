@@ -3,12 +3,13 @@
 ## Table des Matières
 
 1. [Vue d'ensemble du système](#vue-densemble-du-système)
-2. [Configuration des entreprises et devises](#configuration-des-entreprises-et-devises)
-3. [Plan comptable et numérotation](#plan-comptable-et-numérotation)
-4. [Gestion du capital et des actionnaires](#gestion-du-capital-et-des-actionnaires)
-5. [Écritures comptables](#écritures-comptables)
-6. [États financiers](#états-financiers)
-7. [Troubleshooting et bonnes pratiques](#troubleshooting-et-bonnes-pratiques)
+2. [Gestion des utilisateurs et sécurité](#gestion-des-utilisateurs-et-sécurité)
+3. [Configuration des entreprises et devises](#configuration-des-entreprises-et-devises)
+4. [Plan comptable et numérotation](#plan-comptable-et-numérotation)
+5. [Gestion du capital et des actionnaires](#gestion-du-capital-et-des-actionnaires)
+6. [Écritures comptables](#écritures-comptables)
+7. [États financiers](#états-financiers)
+8. [Troubleshooting et bonnes pratiques](#troubleshooting-et-bonnes-pratiques)
 
 ---
 
@@ -25,7 +26,7 @@
 
 ```
 Entreprise
-├── Utilisateurs
+├── Utilisateurs (avec rôles et permissions)
 ├── Exercices comptables
 ├── Plan comptable (Comptes)
 │   ├── Comptes principaux
@@ -33,6 +34,158 @@ Entreprise
 ├── Journaux
 └── Écritures comptables
     └── Lignes d'écriture
+```
+
+### Nouveautés de la version actuelle
+
+- **✅ Gestion complète des utilisateurs** : Création, modification, activation/désactivation
+- **✅ Système de rôles et permissions** : Administrateur, Comptable, Assistant Comptable, Consultant
+- **✅ Sécurité renforcée** : Authentification hybride, contrôle d'accès basé sur les rôles
+- **✅ Initialisation automatique d'entreprise** : Création automatique de l'exercice, plan comptable et utilisateur administrateur
+- **✅ Interface intuitive** : Gestion des permissions dynamiques dans l'interface
+- **✅ Profil utilisateur** : Possibilité de modifier ses informations personnelles et mot de passe
+
+---
+
+## Gestion des utilisateurs et sécurité
+
+### Système de rôles
+
+Le système implémente un contrôle d'accès basé sur les rôles (RBAC) avec quatre niveaux de permissions :
+
+#### 1. **ADMINISTRATEUR**
+- **Permissions complètes** : Accès à toutes les fonctionnalités
+- **Gestion des utilisateurs** : Création, modification, activation/désactivation
+- **Administration du système** : Configuration entreprise, paramètres globaux
+
+#### 2. **COMPTABLE**
+- **Écritures comptables** : Création, modification, validation
+- **États financiers** : Génération de tous les rapports
+- **Plan comptable** : Gestion des comptes
+- **Consultation utilisateurs** : Lecture seule
+
+#### 3. **ASSISTANT_COMPTABLE**
+- **Saisie d'écritures** : Création et modification d'écritures
+- **Consultation** : Accès en lecture aux états financiers
+- **Pas d'accès** : Administration système
+
+#### 4. **CONSULTANT**
+- **Lecture seule** : Consultation des états financiers uniquement
+- **Pas de modification** : Aucune écriture ou changement
+
+### Interface de gestion des utilisateurs
+
+#### Accès à l'interface
+```
+Menu → Administration → Gestion des utilisateurs
+(Accessible uniquement aux administrateurs)
+```
+
+#### Fonctionnalités disponibles
+
+**📋 Liste des utilisateurs :**
+- Statut (✅ Actif / ❌ Inactif)
+- Nom d'utilisateur
+- Nom complet (Prénom + Nom)
+- Adresse email
+- Rôle (traduit en français)
+- Dernière connexion
+
+**🔧 Actions disponibles :**
+- **➕ Ajouter** : Créer un nouvel utilisateur
+- **✏️ Modifier** : Éditer les informations (double-clic possible)
+- **🔄 Activer/Désactiver** : Changer le statut d'un utilisateur
+- **🔄 Actualiser** : Recharger la liste
+
+### Création d'un nouvel utilisateur
+
+#### Informations requises
+```
+Nom d'utilisateur : [Unique dans l'entreprise]
+Prénom          : [Obligatoire]
+Nom             : [Obligatoire]
+Email           : [Unique, format valide]
+Rôle            : [Sélection parmi les 4 rôles]
+Mot de passe    : [Minimum 6 caractères]
+Confirmation    : [Doit correspondre]
+Statut          : [Actif par défaut]
+```
+
+#### Validation automatique
+- ✅ **Unicité** : Nom d'utilisateur et email uniques
+- ✅ **Format email** : Validation du format
+- ✅ **Mot de passe** : Longueur minimale et confirmation
+- ✅ **Champs obligatoires** : Tous les champs requis
+
+### Sécurité des mots de passe
+
+#### Système hybride
+Le système supporte deux formats de mots de passe pour la compatibilité :
+
+**Nouveaux utilisateurs (recommandé) :**
+```java
+// Hashage automatique lors de la création
+String hashedPassword = Integer.toString(password.hashCode());
+```
+
+**Anciens utilisateurs (legacy) :**
+```java
+// Authentification compatible avec mots de passe en clair
+boolean isValid = passwordInDb.equals(plainPassword) ||
+                  passwordInDb.equals(hashedPassword);
+```
+
+#### Mise à jour des mots de passe
+- **Changement via profil** : Nouveau mot de passe automatiquement hashé
+- **Migration progressive** : Les anciens mots de passe sont hashés lors du changement
+
+### Contrôle d'accès interface
+
+#### Protection menu Administration
+```java
+// Configuration dynamique des permissions
+private void configureMenuPermissions() {
+    boolean isAdministrateur = authService.isAdministrateur();
+    userManagementMenuItem.setDisable(!isAdministrateur);
+}
+```
+
+#### Vérification backend
+```java
+// Protection double au niveau contrôleur
+@FXML
+private void showUtilisateurs(ActionEvent event) {
+    if (!authenticationService.isAdministrateur()) {
+        showError("Accès refusé", "Seuls les administrateurs...");
+        return;
+    }
+    // ... Continuer uniquement si autorisé
+}
+```
+
+### Profil utilisateur
+
+#### Accès au profil
+```
+Menu → Administration → Mon profil
+(Accessible à tous les utilisateurs connectés)
+```
+
+#### Fonctionnalités du profil
+- **👤 Informations personnelles** : Prénom, nom, email
+- **🔐 Changement de mot de passe** : Avec vérification de l'ancien mot de passe
+- **🏢 Informations entreprise** : Affichage en lecture seule
+- **📅 Dernière connexion** : Information de sécurité
+
+#### Validation changement mot de passe
+```java
+// Vérification mot de passe actuel (hybride)
+boolean passwordMatches = false;
+if (passwordInDb.equals(currentPassword)) {
+    passwordMatches = true; // Mot de passe en clair
+} else if (passwordInDb.equals(hashedCurrentPassword)) {
+    passwordMatches = true; // Mot de passe hashé
+}
 ```
 
 ---
@@ -61,6 +214,81 @@ Le système détecte automatiquement la devise et les normes comptables :
 // La détection se fait automatiquement via CurrencyService
 boolean isOHADA = currencyService.isOHADAEntreprise();
 String format = currencyService.getAmountInputFormat();
+```
+
+### Création d'une nouvelle entreprise
+
+#### Interface de création
+```
+Menu → Fichier → Nouvelle entreprise
+```
+
+#### Détection intelligente de la devise
+Le système détecte automatiquement la devise et le plan comptable en fonction du contexte utilisateur :
+
+**Utilisateur admin_france :**
+- Pays : France (par défaut)
+- Devise : Euro (€)
+- Plan comptable : Français (sans préfixe CM)
+
+**Autres utilisateurs :**
+- Pays : Cameroun (par défaut)
+- Devise : Franc CFA (FCFA)
+- Plan comptable : OHADA (avec préfixe CM)
+
+#### Initialisation automatique
+Lors de la création d'une entreprise, le système initialise automatiquement :
+
+1. **📅 Exercice comptable** : Exercice courant (du 1er janvier au 31 décembre)
+2. **👤 Utilisateur administrateur** : Compte admin par défaut avec email généré
+3. **📊 Plan comptable de base** : Comptes essentiels selon les normes (française ou OHADA)
+
+#### Comptes créés automatiquement
+
+**Plan comptable français :**
+```
+101000 - Capital social
+106000 - Réserves
+120000 - Résultat de l'exercice
+411000 - Clients
+401000 - Fournisseurs
+512000 - Banque
+530000 - Caisse
+```
+
+**Plan comptable OHADA :**
+```
+CM101000 - Capital social
+CM106000 - Réserves
+CM120000 - Résultat de l'exercice
+CM411000 - Clients
+CM401000 - Fournisseurs
+CM521000 - Banque
+CM571000 - Caisse
+```
+
+#### Service d'initialisation
+```java
+@Service
+public class EntrepriseInitializationService {
+
+    public boolean initializeEntreprise(Entreprise entreprise) {
+        // Initialisation en transaction unique
+        Transaction transaction = session.beginTransaction();
+
+        // 1. Créer l'exercice par défaut
+        Exercice exercice = createDefaultExercice(entreprise);
+
+        // 2. Créer l'utilisateur administrateur
+        Utilisateur adminUser = createDefaultAdminUser(entreprise);
+
+        // 3. Créer le plan comptable de base
+        boolean comptesCreated = createComptesDeBase(entreprise);
+
+        transaction.commit();
+        return true;
+    }
+}
 ```
 
 ---
