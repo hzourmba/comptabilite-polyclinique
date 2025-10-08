@@ -28,15 +28,25 @@ Un logiciel de comptabilité complet développé en Java avec JavaFX et MySQL, c
 - Compte de résultat
 - Déclarations TVA
 
-### Gestion Multi-utilisateurs
-- Système d'authentification sécurisé
-- Rôles utilisateurs : Administrateur, Comptable, Assistant, Consultant
-- Gestion des droits d'accès
+### Gestion Multi-utilisateurs ✨ **NOUVEAU**
+- **Interface complète de gestion des utilisateurs** : Création, modification, activation/désactivation
+- **Système de rôles avancé** : 4 niveaux de permissions (Administrateur, Comptable, Assistant Comptable, Consultant)
+- **Sécurité renforcée** : Authentification hybride, contrôle d'accès basé sur les rôles
+- **Profil utilisateur** : Modification des informations personnelles et mot de passe
+- **Protection multicouche** : Interface + backend + base de données
 
-### Administration
-- Gestion des exercices comptables
-- Paramétrage de l'entreprise
-- Sauvegarde et restauration
+### Administration ✨ **AMÉLIORÉ**
+- **Initialisation automatique d'entreprise** : Création automatique de l'exercice, plan comptable et utilisateur admin
+- **Détection intelligente de devise** : Adaptation automatique selon le contexte utilisateur
+- **Gestion des exercices comptables**
+- **Paramétrage de l'entreprise**
+- **Sauvegarde et restauration automatisées**
+
+### Multi-devises et Multi-normes
+- **Support Euro (€) et Franc CFA (FCFA)**
+- **Plans comptables français et OHADA/Cameroun**
+- **Numérotation automatique adaptée** (avec ou sans préfixe CM)
+- **Détection contextuelle** selon l'utilisateur connecté
 
 ## Prérequis
 
@@ -132,14 +142,20 @@ src/main/java/com/comptabilite/
 │   └── Facture.java
 ├── dao/                # Data Access Objects
 │   ├── BaseDAO.java
-│   ├── UtilisateurDAO.java
+│   ├── UtilisateurDAO.java           ✨ Sécurité renforcée
 │   ├── CompteDAO.java
 │   └── EcritureComptableDAO.java
 ├── service/            # Services métier
-│   └── AuthenticationService.java
+│   ├── AuthenticationService.java
+│   ├── EntrepriseInitializationService.java   ✨ NOUVEAU
+│   └── CurrencyService.java
 ├── view/               # Contrôleurs JavaFX
 │   ├── LoginController.java
-│   └── MainController.java
+│   ├── MainController.java            ✨ Contrôle d'accès
+│   ├── UserManagementController.java  ✨ NOUVEAU
+│   ├── UserEditDialogController.java  ✨ NOUVEAU
+│   ├── UserProfileDialogController.java ✨ NOUVEAU
+│   └── EntrepriseDialogController.java ✨ Amélioré
 ├── util/               # Utilitaires
 │   └── HibernateUtil.java
 └── ComptabiliteApplication.java
@@ -147,8 +163,18 @@ src/main/java/com/comptabilite/
 src/main/resources/
 ├── fxml/               # Fichiers FXML pour l'interface
 │   ├── login.fxml
-│   └── main.fxml
-└── hibernate.cfg.xml   # Configuration Hibernate
+│   ├── main_simple.fxml        ✨ Contrôle permissions
+│   ├── user-management.fxml    ✨ NOUVEAU
+│   ├── user-edit-dialog.fxml   ✨ NOUVEAU
+│   ├── user-profile-dialog.fxml ✨ NOUVEAU
+│   └── entreprise-dialog.fxml  ✨ Amélioré
+├── hibernate.cfg.xml   # Configuration Hibernate
+└── css/                # Styles CSS
+
+Documentation/
+├── Guide_Comptabilite_Complet.md    ✨ Mis à jour
+├── Guide_Comptabilite_Complet.html  ✨ Mis à jour
+└── backups/            # Sauvegardes base de données
 ```
 
 ## Technologies Utilisées
@@ -190,10 +216,48 @@ java -jar target/comptabilite-entreprise-1.0.0.jar
 
 Ce projet est développé à des fins éducatives et professionnelles.
 
+## Nouvelles Fonctionnalités (Octobre 2025)
+
+### 🎯 Gestion Complète des Utilisateurs
+- **Interface de gestion** : `Menu → Administration → Gestion des utilisateurs`
+- **Création d'utilisateurs** : Formulaire complet avec validation
+- **Activation/Désactivation** : Contrôle des accès utilisateur
+- **Double-clic** : Édition rapide des utilisateurs
+
+### 🔐 Sécurité Renforcée
+- **4 niveaux de rôles** : Administrateur, Comptable, Assistant Comptable, Consultant
+- **Contrôle d'accès dynamique** : Menus adaptés selon les permissions
+- **Protection multicouche** : Interface + backend + base de données
+- **Authentification hybride** : Support mots de passe legacy et hashés
+
+### 👤 Profil Utilisateur
+- **Accès** : `Menu → Administration → Mon profil`
+- **Modification** : Informations personnelles
+- **Sécurité** : Changement de mot de passe sécurisé
+- **Informations** : Dernière connexion, entreprise
+
+### 🏢 Initialisation Automatique d'Entreprise
+- **Détection intelligente** : Devise et plan comptable selon l'utilisateur
+- **Création automatique** : Exercice, comptes de base, utilisateur admin
+- **Support multi-normes** : Français (EUR) et OHADA/Cameroun (FCFA)
+- **Comptes essentiels** : Capital, banque, clients, fournisseurs, etc.
+
+### 📚 Documentation Mise à Jour
+- **Guide complet** : `Guide_Comptabilite_Complet.md` et `.html`
+- **Section sécurité** : Documentation complète des permissions
+- **Exemples pratiques** : Code et configurations
+- **Interface moderne** : Guide HTML avec nouveau design
+
 ## Support
 
-Pour toute question ou problème, consultez la documentation ou contactez l'équipe de développement.
+Pour toute question ou problème, consultez la documentation mise à jour ou contactez l'équipe de développement.
+
+## Dernière Mise à Jour
+
+**Version** : Octobre 2025 - Gestion des utilisateurs et sécurité
+**Commit** : Implement complete user management system with role-based security
+**GitHub** : Synchronisé avec le repository
 
 ---
 
-**Note** : Ce logiciel est conforme aux standards comptables français et peut être adapté pour d'autres réglementations comptables.
+**Note** : Ce logiciel est conforme aux standards comptables français et OHADA/Cameroun, avec support multi-devises (EUR/FCFA).
